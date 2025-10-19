@@ -1,0 +1,176 @@
+{
+  "stage1": {
+    "persona": {
+      "name": "Danielle",
+      "pain_points": [
+        "Feels him withdraw after moments of closeness",
+        "Second-guesses every text message",
+        "Overanalyzes social media interactions"
+      ],
+      "desires": [
+        "Wants emotionally safe commitment",
+        "Craves reassurance without having to chase",
+        "Hopes to lead conversations with grace"
+      ],
+      "search_intent": [
+        "how to make him commit without pressure",
+        "phrases that keep a man interested",
+        "what to text after he goes quiet"
+      ],
+      "keyword_map": {
+        "primary": "devotion phrases",
+        "supporting": [
+          "feminine energy scripts",
+          "secure attachment mindset",
+          "how to respond when he pulls away"
+        ]
+      }
+    },
+    "seo_templates": {
+      "title": "{primary_keyword} That Make {persona_short} Irresistible — {product} Blueprint",
+      "meta_description": "Use {primary_keyword} sourced from {product} to reframe emotional distance within {lookback_days}-day sprints for {persona_short} leaders.",
+      "hooks": [
+        "Use his micro-moments of silence as your opening to lead",
+        "Anchor his commitment with feminine energy rituals",
+        "Close the gap between anxiety and reassurance in one sentence"
+      ]
+    },
+    "competitor_audit": [
+      {
+        "domain": "psychologytoday.com",
+        "opportunity_keywords": [
+          "feminine energy phrases",
+          "secure attachment scripts"
+        ],
+        "serp_gap": "Most guides stop at mindset tips. None deliver a clear script library tied to emotional triggers."
+      },
+      {
+        "domain": "mindbodygreen.com",
+        "opportunity_keywords": [
+          "relationship rituals",
+          "heart-led conversations"
+        ],
+        "serp_gap": "Articles highlight theory without giving timed prompts or conversions-focused CTAs."
+      }
+    ]
+  },
+  "stage2": {
+    "outline": {
+      "emotional_arc": [
+        "Start in anxious energy",
+        "Introduce devotion ritual",
+        "Stabilize his response",
+        "Show her in calm leadership"
+      ],
+      "sections": [
+        {
+          "heading": "Decode His Pullback Without Panicking",
+          "themes": [
+            "Why he goes quiet after intimacy",
+            "Signals that predict distancing",
+            "Reframing silence as a test of feminine leadership"
+          ]
+        },
+        {
+          "heading": "Install the Devotion Phrase Ritual",
+          "themes": [
+            "Anchor phrases around his hidden fears",
+            "Time the ritual with his routine",
+            "Use micro-reassurance to build momentum"
+          ]
+        },
+        {
+          "heading": "Track Proof That the Ritual Works",
+          "themes": [
+            "Metrics inside the relationship journal",
+            "Conversations to screenshot and study",
+            "Planning your next escalation"
+          ]
+        }
+      ],
+      "external_links": [
+        "https://www.psychologytoday.com/us/blog/romantically-attached",
+        "https://www.healthline.com/health/mental-health/relationship-anxiety"
+      ],
+      "internal_links": [
+        "https://understandingman.com/blog/feminine-energy-leadership",
+        "https://understandingman.com/blog/secure-attachment-checklist"
+      ],
+      "affiliate_prompt": "Add the ClickBank HopLink for Wrap Him Around Your Finger using ?tid=understandingman_blog_flow."
+    },
+    "faq": [
+      {
+        "question": "How fast should I see change once I use the devotion phrases?",
+        "answer": "Most readers notice a shift within 72 hours. Track small signs like faster response times and warmer tone."
+      },
+      {
+        "question": "Can I adapt the ritual if we're long-distance?",
+        "answer": "Yes. Pair the phrases with voice notes or scheduled video rituals to keep his nervous system anchored."
+      }
+    ],
+    "seo_package_keywords": [
+      "devotion phrases",
+      "feminine energy ritual",
+      "secure attachment roadmap"
+    ],
+    "image_brief": {
+      "hero_alt_text": "Woman smiling softly while holding a journal of devotion phrases",
+      "thumbnails": [
+        "Soft pink overlay with quote callout",
+        "Before/after text exchange screenshots",
+        "Calm morning routine flat lay"
+      ]
+    }
+  },
+  "stage3": {
+    "prompts": [
+      "What devotion phrase brought the fastest response?",
+      "How can she celebrate micro-wins in public posts?",
+      "Which emotional driver turns into the CTA?"
+    ],
+    "platforms": {
+      "instagram_reels": {
+        "post_structure": [
+          "Hook on his sudden distance",
+          "Show the devotion phrase",
+          "Invite to Wrap Him Around Your Finger"
+        ],
+        "posting_times": [
+          "Tuesday 6pm EST",
+          "Thursday 11am EST"
+        ],
+        "concepts": [
+          "Split-screen text exchange",
+          "On-screen journaling walkthrough"
+        ],
+        "posts": 3
+      },
+      "tiktok": {
+        "post_structure": [
+          "Pattern interrupt",
+          "Devotion phrase reveal",
+          "CTA and comment prompt"
+        ],
+        "posting_schedule": [
+          "Mon/Wed/Fri evenings"
+        ],
+        "topics": [
+          "Why he pulls away",
+          "Secure energy reset"
+        ],
+        "posts": 4
+      },
+      "pinterest": {
+        "concepts": [
+          "Carousel with phrase scripts",
+          "Quote graphic",
+          "Story pin featuring ritual steps"
+        ],
+        "best_time": "Daily 8pm EST",
+        "schedule": [
+          "Pin three variations per week"
+        ]
+      }
+    }
+  }
+}

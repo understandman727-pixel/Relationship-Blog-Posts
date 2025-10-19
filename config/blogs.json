@@ -1,0 +1,10 @@
+{
+  "blogs": [
+    {
+      "name": "Understand Man 727",
+      "feed_url": "https://understandman727.blogspot.com/feeds/posts/default?alt=rss",
+      "local_feed": "data/sample_feed.xml",
+      "max_posts": 5
+    }
+  ]
+}

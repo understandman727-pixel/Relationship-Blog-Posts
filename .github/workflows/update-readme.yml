@@ -1,0 +1,38 @@
+name: Refresh blog post list
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - config/blogs.json
+  schedule:
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Refresh blog list
+        run: python scripts/python/update_readme.py
+
+      - name: Commit and push changes
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "chore: refresh blog post list"
+            git push
+          else
+            echo "No changes to commit."
+          fi

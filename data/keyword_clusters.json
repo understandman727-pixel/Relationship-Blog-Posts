@@ -1,0 +1,112 @@
+{
+  "clusters": [
+    {
+      "id": "devotion-phrases",
+      "label": "Devotion Phrase Library",
+      "core_emotion": "Safety",
+      "conversion_potential": "High",
+      "product_compatibility": "Direct tie-in to Wrap Him Around Your Finger script pack",
+      "keywords": [
+        {
+          "term": "devotion phrases",
+          "volume": 3600,
+          "difficulty": 18,
+          "ctr_estimate": 0.18,
+          "pinterest_angle": "Soft journal flat lays with phrases",
+          "meta_hook": "Steal her exact devotion phrases",
+          "emotional_driver": "Security"
+        },
+        {
+          "term": "phrases that make him commit",
+          "volume": 2900,
+          "difficulty": 22,
+          "ctr_estimate": 0.16,
+          "pinterest_angle": "Text bubble screenshots",
+          "meta_hook": "What to say when he pulls away",
+          "emotional_driver": "Hope"
+        },
+        {
+          "term": "how to talk so he stays",
+          "volume": 1900,
+          "difficulty": 25,
+          "ctr_estimate": 0.14,
+          "pinterest_angle": "Story pin: before/after",
+          "meta_hook": "3 texts to reset his heart",
+          "emotional_driver": "Reassurance"
+        }
+      ]
+    },
+    {
+      "id": "feminine-energy",
+      "label": "Feminine Energy Reset",
+      "core_emotion": "Confidence",
+      "conversion_potential": "Medium",
+      "product_compatibility": "Supports bonus modules inside the program",
+      "keywords": [
+        {
+          "term": "feminine energy ritual",
+          "volume": 2100,
+          "difficulty": 28,
+          "ctr_estimate": 0.13,
+          "pinterest_angle": "Morning routine vision board",
+          "meta_hook": "The 5-minute ritual he can't resist",
+          "emotional_driver": "Desire"
+        },
+        {
+          "term": "magnetic feminine energy",
+          "volume": 2500,
+          "difficulty": 31,
+          "ctr_estimate": 0.12,
+          "pinterest_angle": "Glow-up transformation",
+          "meta_hook": "Reset his devotion in one evening",
+          "emotional_driver": "Admiration"
+        },
+        {
+          "term": "feminine energy phrases",
+          "volume": 1800,
+          "difficulty": 27,
+          "ctr_estimate": 0.11,
+          "pinterest_angle": "Quote carousel",
+          "meta_hook": "Soft power scripts",
+          "emotional_driver": "Respect"
+        }
+      ]
+    },
+    {
+      "id": "secure-attachment",
+      "label": "Secure Attachment Habits",
+      "core_emotion": "Calm",
+      "conversion_potential": "Medium",
+      "product_compatibility": "Aligns with the monthly coaching emails",
+      "keywords": [
+        {
+          "term": "secure attachment checklist",
+          "volume": 1500,
+          "difficulty": 24,
+          "ctr_estimate": 0.1,
+          "pinterest_angle": "Checklist printable",
+          "meta_hook": "Daily checkpoints to keep him close",
+          "emotional_driver": "Stability"
+        },
+        {
+          "term": "how to stop anxious attachment",
+          "volume": 3200,
+          "difficulty": 29,
+          "ctr_estimate": 0.12,
+          "pinterest_angle": "Soothing color palette",
+          "meta_hook": "From spirals to soft power",
+          "emotional_driver": "Relief"
+        },
+        {
+          "term": "secure relationship habits",
+          "volume": 1700,
+          "difficulty": 26,
+          "ctr_estimate": 0.11,
+          "pinterest_angle": "Calendar planning",
+          "meta_hook": "Week-by-week trust builder",
+          "emotional_driver": "Consistency"
+        }
+      ]
+    }
+  ]
+}
