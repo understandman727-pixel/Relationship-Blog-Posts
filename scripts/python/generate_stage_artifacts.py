@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import math
 import re
@@ -33,8 +34,8 @@ def ensure_directory(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
 
 
-def slugify(value: str) -> str:
-    value = value.lower()
+def slugify(value: str | None) -> str:
+    value = str(value or "").lower()
     value = re.sub(r"[^a-z0-9]+", "-", value)
     value = re.sub(r"-+", "-", value)
     return value.strip("-")
@@ -50,7 +51,21 @@ def clean_sentence(text: str) -> str:
 
 
 def cluster_metrics(cluster: Dict[str, Any]) -> Dict[str, Any]:
-    keywords = cluster["keywords"]
+    keywords = cluster.get("keywords")
+    if not isinstance(keywords, list) or not keywords:
+        raise ValueError("Each cluster must include a non-empty 'keywords' list")
+
+    def _dedupe_preserve_order(values: Iterable[str]) -> List[str]:
+        seen: set[str] = set()
+        ordered: List[str] = []
+        for value in values:
+            if not value:
+                continue
+            if value not in seen:
+                seen.add(value)
+                ordered.append(value)
+        return ordered
+
     volumes = [kw["volume"] for kw in keywords]
     difficulties = [kw["difficulty"] for kw in keywords]
     ctrs = [kw.get("ctr_estimate", 0.12) for kw in keywords]
@@ -61,9 +76,13 @@ def cluster_metrics(cluster: Dict[str, Any]) -> Dict[str, Any]:
     weight = conv_weight.get(cluster.get("conversion_potential", "Medium"), 2.0)
     score = (total_volume * weight) + (avg_ctr * 1000) - (avg_difficulty * 45)
     top_keywords = sorted(keywords, key=lambda kw: kw["volume"], reverse=True)[:3]
-    pinterest_angles = list({kw.get("pinterest_angle", "") for kw in keywords})
-    meta_hooks = list({kw.get("meta_hook", "") for kw in keywords})
-    emotional_drivers = list({kw.get("emotional_driver", "") for kw in keywords})
+    pinterest_angles = _dedupe_preserve_order(
+        kw.get("pinterest_angle", "") for kw in keywords
+    )
+    meta_hooks = _dedupe_preserve_order(kw.get("meta_hook", "") for kw in keywords)
+    emotional_drivers = _dedupe_preserve_order(
+        kw.get("emotional_driver", "") for kw in keywords
+    )
     return {
         "id": cluster["id"],
         "label": cluster["label"],
@@ -541,7 +560,9 @@ def stage2(args: argparse.Namespace, config: Dict[str, Any]) -> Dict[str, Any]:
     )
     write_text_file(output_dir / "step3_optimization_review.md", "\n".join(checklist_lines))
 
-    slug = slugify(context["seo_title"])
+    seo_title = context.get("seo_title") or "Devotion Blueprint"
+    meta_description = context.get("meta_description") or ""
+    slug = slugify(seo_title)
 
     final_markdown = article_text
     final_path = output_dir / "step6_5_final_draft.md"
@@ -549,23 +570,25 @@ def stage2(args: argparse.Namespace, config: Dict[str, Any]) -> Dict[str, Any]:
 
     html_lines = [
         "<article class=\"devotion-blueprint\">",
-        f"  <h1 style=\"text-align:center;\">{context['seo_title']}</h1>",
+        f"  <h1 style=\"text-align:center;\">{html.escape(seo_title)}</h1>",
     ]
     for line in article_text.splitlines():
         if line.startswith("# "):
             continue
         if line.startswith("## "):
             heading = line[3:]
-            html_lines.append(f"  <h2 style=\"text-align:center;\">{heading}</h2>")
+            html_lines.append(
+                f"  <h2 style=\"text-align:center;\">{html.escape(heading)}</h2>"
+            )
         elif line.strip():
-            html_lines.append(f"  <p>{line.strip()}</p>")
+            html_lines.append(f"  <p>{html.escape(line.strip())}</p>")
     html_lines.append("</article>")
     html_path = output_dir / "step7_clickbank_html.html"
     write_text_file(html_path, "\n".join(html_lines))
 
     seo_package = {
-        "seo_title": context["seo_title"],
-        "seo_description": context["meta_description"],
+        "seo_title": seo_title,
+        "seo_description": meta_description,
         "keywords": secondary_keywords,
         "slug": slug,
         "word_count": word_count,
