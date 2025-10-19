@@ -105,6 +105,10 @@ jobs:
     name: Stage 2 — Blog Creation & Optimization
     needs: stage1_research
     runs-on: ubuntu-latest
+    outputs:
+      product: ${{ steps.forward_configuration.outputs.product }}
+      persona: ${{ steps.forward_configuration.outputs.persona }}
+      lookback_days: ${{ steps.forward_configuration.outputs.lookback_days }}
     env:
       PRODUCT: ${{ needs.stage1_research.outputs.product }}
       PERSONA_NAME: ${{ needs.stage1_research.outputs.persona }}
@@ -137,6 +141,15 @@ jobs:
             --persona-name "${PERSONA_NAME}" \
             --lookback-days "${LOOKBACK_DAYS}"
 
+      - name: Forward configuration for downstream stages
+        id: forward_configuration
+        run: |
+          {
+            printf 'product=%s\n' "${PRODUCT}"
+            printf 'persona=%s\n' "${PERSONA_NAME}"
+            printf 'lookback_days=%s\n' "${LOOKBACK_DAYS}"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Upload Stage 2 artifact bundle
         uses: actions/upload-artifact@v4
         with:
@@ -147,10 +160,14 @@ jobs:
     name: Stage 3 — Cross-Platform Distribution
     needs: stage2_creation
     runs-on: ubuntu-latest
+    outputs:
+      product: ${{ steps.forward_configuration.outputs.product }}
+      persona: ${{ steps.forward_configuration.outputs.persona }}
+      lookback_days: ${{ steps.forward_configuration.outputs.lookback_days }}
     env:
-      PRODUCT: ${{ needs.stage1_research.outputs.product }}
-      PERSONA_NAME: ${{ needs.stage1_research.outputs.persona }}
-      LOOKBACK_DAYS: ${{ needs.stage1_research.outputs.lookback_days }}
+      PRODUCT: ${{ needs.stage2_creation.outputs.product }}
+      PERSONA_NAME: ${{ needs.stage2_creation.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.stage2_creation.outputs.lookback_days }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -179,6 +196,15 @@ jobs:
             --persona-name "${PERSONA_NAME}" \
             --lookback-days "${LOOKBACK_DAYS}"
 
+      - name: Forward configuration for downstream stages
+        id: forward_configuration
+        run: |
+          {
+            printf 'product=%s\n' "${PRODUCT}"
+            printf 'persona=%s\n' "${PERSONA_NAME}"
+            printf 'lookback_days=%s\n' "${LOOKBACK_DAYS}"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Upload Stage 3 artifact bundle
         uses: actions/upload-artifact@v4
         with:
@@ -189,10 +215,14 @@ jobs:
     name: Stage 4 — Analytics & Refinement
     needs: stage3_distribution
     runs-on: ubuntu-latest
+    outputs:
+      product: ${{ steps.forward_configuration.outputs.product }}
+      persona: ${{ steps.forward_configuration.outputs.persona }}
+      lookback_days: ${{ steps.forward_configuration.outputs.lookback_days }}
     env:
-      PRODUCT: ${{ needs.stage1_research.outputs.product }}
-      PERSONA_NAME: ${{ needs.stage1_research.outputs.persona }}
-      LOOKBACK_DAYS: ${{ needs.stage1_research.outputs.lookback_days }}
+      PRODUCT: ${{ needs.stage3_distribution.outputs.product }}
+      PERSONA_NAME: ${{ needs.stage3_distribution.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.stage3_distribution.outputs.lookback_days }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -221,6 +251,15 @@ jobs:
             --persona-name "${PERSONA_NAME}" \
             --lookback-days "${LOOKBACK_DAYS}"
 
+      - name: Forward configuration for downstream stages
+        id: forward_configuration
+        run: |
+          {
+            printf 'product=%s\n' "${PRODUCT}"
+            printf 'persona=%s\n' "${PERSONA_NAME}"
+            printf 'lookback_days=%s\n' "${LOOKBACK_DAYS}"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Upload Stage 4 artifact bundle
         uses: actions/upload-artifact@v4
         with:
@@ -232,9 +271,9 @@ jobs:
     needs: stage4_analytics
     runs-on: ubuntu-latest
     env:
-      PRODUCT: ${{ needs.stage1_research.outputs.product }}
-      PERSONA_NAME: ${{ needs.stage1_research.outputs.persona }}
-      LOOKBACK_DAYS: ${{ needs.stage1_research.outputs.lookback_days }}
+      PRODUCT: ${{ needs.stage4_analytics.outputs.product }}
+      PERSONA_NAME: ${{ needs.stage4_analytics.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.stage4_analytics.outputs.lookback_days }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
