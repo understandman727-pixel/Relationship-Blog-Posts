@@ -8,7 +8,8 @@
 
 ## Automation
 
-The blog roll above is refreshed by the [`scripts/python/update_readme.py`](scripts/python/update_readme.py) helper.
+The blog roll above is refreshed exclusively by the [`scripts/python/update_readme.py`](scripts/python/update_readme.py) helper. This script is the single source of truth for updating the `<!-- BLOG-POST-LIST -->` block.
 
 - Run it locally with `python scripts/python/update_readme.py --offline` to use the bundled sample feed when network access is restricted.
-- In GitHub, the workflow at [`.github/workflows/update-readme.yml`](.github/workflows/update-readme.yml) runs the script daily, on manual dispatch, and whenever the feed configuration at [`config/blogs.json`](config/blogs.json) changes so the list stays up to date.
+- In GitHub, the workflow at [`.github/workflows/update-readme.yml`](.github/workflows/update-readme.yml) runs the script hourly, on manual dispatch, and whenever the feed configuration at [`config/blogs.json`](config/blogs.json) changes so the list stays up to date.
+- The previous third-party action (`blog-post-workflow.yml`) has been removed to avoid conflicting edits; the Python script-driven workflow described above is the only automation that updates the README.
