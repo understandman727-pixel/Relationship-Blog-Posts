@@ -1,0 +1,11 @@
+# Python artifacts
+__pycache__/
+*.pyc
+
+# Workflow-generated outputs
+artifacts/
+/tmp/
+
+# OS junk
+.DS_Store
+Thumbs.db
