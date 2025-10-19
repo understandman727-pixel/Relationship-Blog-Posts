@@ -22,9 +22,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "research/**"
-      - "scripts/research/**"
-      - ".github/workflows/stage1-research.yml"
+      - ".github/workflows/stage1-research phase.yml"
 
 permissions:
   contents: write
@@ -36,9 +34,9 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PRODUCT: ${{ inputs.product || github.event.client_payload.product || 'Wrap Him Around Your Finger' }}
-  PERSONA: ${{ inputs.persona || github.event.client_payload.persona || 'Dating & Relationship Advice for Women' }}
-  LOOKBACK_DAYS: ${{ inputs.lookback_days || github.event.client_payload.lookback_days || '30' }}
+  PRODUCT: ${{ (github.event_name == 'workflow_dispatch' && inputs.product) || (github.event_name == 'repository_dispatch' && github.event.client_payload.product) || 'Wrap Him Around Your Finger' }}
+  PERSONA_NAME: ${{ (github.event_name == 'workflow_dispatch' && inputs.persona) || (github.event_name == 'repository_dispatch' && github.event.client_payload.persona) || 'Dating & Relationship Advice for Women' }}
+  LOOKBACK_DAYS: ${{ (github.event_name == 'workflow_dispatch' && inputs.lookback_days) || (github.event_name == 'repository_dispatch' && github.event.client_payload.lookback_days) || '30' }}
 
 jobs:
   research:
@@ -46,34 +44,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: "20"
-          cache: "npm"
+          python-version: '3.11'
+          cache: 'pip'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
 
-      - name: Gather cross-platform keyword candidates
-        run: npm run research:gather --if-present
-
-      - name: Build keyword clusters
-        run: npm run research:cluster --if-present
-
-      - name: Auto-select best cluster with justification
-        run: npm run research:autoselect --if-present
-
-      - name: Create Accelerator SEO package
-        run: npm run research:seo:package --if-present
-
-      - name: Generate title seeds + hooks for Stage 2/3
-        run: npm run research:seeds --if-present
-
-      - name: Persist artifacts
+      - name: Generate Stage 1 research artifacts
         run: |
-          mkdir -p artifacts/stage1
-          cp -r research/output/* artifacts/stage1/ || true
+          python scripts/python/generate_stage_artifacts.py stage1 \
+            --output-dir artifacts/stage1 \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
 
       - name: Upload Stage 1 artifacts
         uses: actions/upload-artifact@v4
