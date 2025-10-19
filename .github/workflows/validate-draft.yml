@@ -1,10 +1,12 @@
-name: Validate Draft (SEO + Affiliate)
+name: Test Robot
+
 on:
   push:
-    paths: ["content/drafts/**.md"]
+    branches: [ main ]
+
 jobs:
-  check:
+  hello:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: echo "✅ Your draft looks great! (Your robots will do more checks later)"
+      - name: Say hello
+        run: echo "🤖 Hello! I’m alive and ready to help with your blogs."
