@@ -218,6 +218,8 @@ jobs:
     name: Stage 6 — Refresh README
     needs: stage5_growth
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
