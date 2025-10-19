@@ -50,23 +50,37 @@ def clean_sentence(text: str) -> str:
 
 
 def cluster_metrics(cluster: Dict[str, Any]) -> Dict[str, Any]:
-    keywords = cluster["keywords"]
-    volumes = [kw["volume"] for kw in keywords]
-    difficulties = [kw["difficulty"] for kw in keywords]
-    ctrs = [kw.get("ctr_estimate", 0.12) for kw in keywords]
-    total_volume = sum(volumes)
-    avg_difficulty = statistics.mean(difficulties)
-    avg_ctr = statistics.mean(ctrs)
+    def _to_number(value: Any, default: float = 0.0) -> float:
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return default
+
+    raw_keywords = cluster.get("keywords", [])
+    keywords = [kw for kw in raw_keywords if isinstance(kw, dict)]
+
+    volumes = [max(_to_number(kw.get("volume")), 0.0) for kw in keywords]
+    difficulties = [_to_number(kw.get("difficulty")) for kw in keywords]
+    ctrs = [_to_number(kw.get("ctr_estimate", 0.12), default=0.12) for kw in keywords]
+
+    total_volume = int(sum(volumes))
+    avg_difficulty = statistics.mean(difficulties) if difficulties else 0.0
+    avg_ctr = statistics.mean(ctrs) if ctrs else 0.0
     conv_weight = {"High": 3.0, "Medium": 2.0, "Low": 1.0}
     weight = conv_weight.get(cluster.get("conversion_potential", "Medium"), 2.0)
     score = (total_volume * weight) + (avg_ctr * 1000) - (avg_difficulty * 45)
-    top_keywords = sorted(keywords, key=lambda kw: kw["volume"], reverse=True)[:3]
+    top_keywords_raw = sorted(keywords, key=lambda kw: kw.get("volume", 0), reverse=True)[:3]
+    top_keywords = [kw.get("term", "").strip() for kw in top_keywords_raw if kw.get("term")]
+    if not top_keywords:
+        fallback_keyword = str(cluster.get("label", "Core Topic")).strip() or "Core Topic"
+        top_keywords = [fallback_keyword]
+
     pinterest_angles = list({kw.get("pinterest_angle", "") for kw in keywords})
     meta_hooks = list({kw.get("meta_hook", "") for kw in keywords})
     emotional_drivers = list({kw.get("emotional_driver", "") for kw in keywords})
     return {
-        "id": cluster["id"],
-        "label": cluster["label"],
+        "id": cluster.get("id", ""),
+        "label": cluster.get("label", "Unnamed Cluster"),
         "core_emotion": cluster.get("core_emotion", ""),
         "conversion_potential": cluster.get("conversion_potential", "Medium"),
         "product_compatibility": cluster.get("product_compatibility", ""),
@@ -76,7 +90,7 @@ def cluster_metrics(cluster: Dict[str, Any]) -> Dict[str, Any]:
         "avg_ctr": avg_ctr,
         "score": score,
         "keywords": keywords,
-        "top_keywords": [kw["term"] for kw in top_keywords],
+        "top_keywords": top_keywords,
         "pinterest_angles": pinterest_angles,
         "meta_hooks": meta_hooks,
         "emotional_drivers": emotional_drivers,
