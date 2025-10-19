@@ -20,6 +20,7 @@ on:
 
 permissions:
   contents: read
+  actions: write
 
 concurrency:
   group: blog-master-${{ github.ref }}
@@ -212,3 +213,24 @@ jobs:
         with:
           name: stage5-growth
           path: artifacts/stage5
+
+  stage6_refresh_readme:
+    name: Stage 6 — Refresh README
+    needs: stage5_growth
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: python scripts/python/update_readme.py
+
+      - run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -am 'chore: refresh blog post list'
+            git push
+          fi
