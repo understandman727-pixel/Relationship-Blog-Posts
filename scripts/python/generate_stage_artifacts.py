@@ -49,6 +49,20 @@ def clean_sentence(text: str) -> str:
     return text
 
 
+def _unique_preserving_order(values: Iterable[str | None]) -> List[str]:
+    """Return unique, non-empty strings while preserving their first-seen order."""
+
+    unique: List[str] = []
+    for value in values:
+        if value is None:
+            continue
+        normalized = str(value).strip()
+        if not normalized or normalized in unique:
+            continue
+        unique.append(normalized)
+    return unique
+
+
 def cluster_metrics(cluster: Dict[str, Any]) -> Dict[str, Any]:
     keywords = cluster["keywords"]
     volumes = [kw["volume"] for kw in keywords]
@@ -61,9 +75,13 @@ def cluster_metrics(cluster: Dict[str, Any]) -> Dict[str, Any]:
     weight = conv_weight.get(cluster.get("conversion_potential", "Medium"), 2.0)
     score = (total_volume * weight) + (avg_ctr * 1000) - (avg_difficulty * 45)
     top_keywords = sorted(keywords, key=lambda kw: kw["volume"], reverse=True)[:3]
-    pinterest_angles = list({kw.get("pinterest_angle", "") for kw in keywords})
-    meta_hooks = list({kw.get("meta_hook", "") for kw in keywords})
-    emotional_drivers = list({kw.get("emotional_driver", "") for kw in keywords})
+    pinterest_angles = _unique_preserving_order(
+        kw.get("pinterest_angle") for kw in keywords
+    )
+    meta_hooks = _unique_preserving_order(kw.get("meta_hook") for kw in keywords)
+    emotional_drivers = _unique_preserving_order(
+        kw.get("emotional_driver") for kw in keywords
+    )
     return {
         "id": cluster["id"],
         "label": cluster["label"],
