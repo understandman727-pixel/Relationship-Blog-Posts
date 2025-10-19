@@ -158,7 +158,9 @@ jobs:
 
   stage3_distribution:
     name: Stage 3 — Cross-Platform Distribution
-    needs: stage2_creation
+    needs:
+      - stage2_creation
+      - stage1_research
     runs-on: ubuntu-latest
     outputs:
       product: ${{ steps.forward_configuration.outputs.product }}
@@ -213,7 +215,9 @@ jobs:
 
   stage4_analytics:
     name: Stage 4 — Analytics & Refinement
-    needs: stage3_distribution
+    needs:
+      - stage3_distribution
+      - stage1_research
     runs-on: ubuntu-latest
     outputs:
       product: ${{ steps.forward_configuration.outputs.product }}
@@ -268,7 +272,9 @@ jobs:
 
   stage5_growth:
     name: Stage 5 — Continuous Growth Loop
-    needs: stage4_analytics
+    needs:
+      - stage4_analytics
+      - stage1_research
     runs-on: ubuntu-latest
     env:
       PRODUCT: ${{ needs.stage4_analytics.outputs.product }}
