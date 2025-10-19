@@ -1,0 +1,480 @@
+name: Relationship Content Master Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      product:
+        description: 'Affiliate product to research'
+        required: false
+        default: 'Wrap Him Around Your Finger'
+      persona:
+        description: 'Target persona label'
+        required: false
+        default: 'Heart-Led High Achiever'
+      lookback_days:
+        description: 'Recency window for trend data'
+        required: false
+        default: '30'
+      greeting_name:
+        description: 'Optional person to greet during manual runs'
+        required: false
+        default: ''
+  schedule:
+    - cron: '0 6 * * *'
+    - cron: '0 * * * *'
+  repository_dispatch:
+    types: [stage1_start, notion_brief_updated]
+  push:
+    branches: [ main ]
+    paths:
+      - 'research/**'
+      - 'scripts/research/**'
+      - 'config/blogs.json'
+      - '.github/workflows/relationship-master-workflow.yml'
+
+permissions:
+  contents: write
+  actions: read
+  id-token: write
+
+concurrency:
+  group: relationship-master-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DEFAULT_PRODUCT: 'Wrap Him Around Your Finger'
+  DEFAULT_PERSONA: 'Heart-Led High Achiever'
+  DEFAULT_LOOKBACK: '30'
+  DEFAULT_GREETING: 'World'
+
+jobs:
+  context:
+    name: Resolve workflow inputs
+    runs-on: ubuntu-latest
+    outputs:
+      product: ${{ steps.resolve.outputs.product }}
+      persona: ${{ steps.resolve.outputs.persona }}
+      lookback: ${{ steps.resolve.outputs.lookback }}
+      greeting: ${{ steps.resolve.outputs.greeting }}
+      run_pipeline: ${{ steps.resolve.outputs.run_pipeline }}
+      run_readme: ${{ steps.resolve.outputs.run_readme }}
+      run_feed: ${{ steps.resolve.outputs.run_feed }}
+    steps:
+      - id: resolve
+        name: Resolve dynamic defaults
+        shell: bash
+        env:
+          INPUT_PRODUCT: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.product || '' }}
+          PAYLOAD_PRODUCT: ${{ github.event.client_payload.product || '' }}
+          INPUT_PERSONA: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.persona || '' }}
+          PAYLOAD_PERSONA: ${{ github.event.client_payload.persona || '' }}
+          INPUT_LOOKBACK: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.lookback_days || '' }}
+          PAYLOAD_LOOKBACK: ${{ github.event.client_payload.lookback_days || '' }}
+          INPUT_GREETING: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.greeting_name || '' }}
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE_CRON: ${{ github.event.schedule || '' }}
+        run: |
+          product="$INPUT_PRODUCT"
+          if [[ -z "$product" ]]; then
+            product="$PAYLOAD_PRODUCT"
+          fi
+          if [[ -z "$product" ]]; then
+            product="$DEFAULT_PRODUCT"
+          fi
+
+          persona="$INPUT_PERSONA"
+          if [[ -z "$persona" ]]; then
+            persona="$PAYLOAD_PERSONA"
+          fi
+          if [[ -z "$persona" ]]; then
+            persona="$DEFAULT_PERSONA"
+          fi
+
+          lookback="$INPUT_LOOKBACK"
+          if [[ -z "$lookback" ]]; then
+            lookback="$PAYLOAD_LOOKBACK"
+          fi
+          if [[ -z "$lookback" ]]; then
+            lookback="$DEFAULT_LOOKBACK"
+          fi
+
+          greeting="$INPUT_GREETING"
+          if [[ -z "$greeting" ]]; then
+            greeting="$DEFAULT_GREETING"
+          fi
+
+          run_pipeline="true"
+          run_readme="true"
+          run_feed="true"
+
+          case "$EVENT_NAME" in
+            schedule)
+              if [[ "$SCHEDULE_CRON" == '0 6 * * *' ]]; then
+                run_feed="false"
+              elif [[ "$SCHEDULE_CRON" == '0 * * * *' ]]; then
+                run_pipeline="false"
+                run_readme="false"
+              else
+                run_pipeline="false"
+                run_readme="false"
+                run_feed="false"
+              fi
+              ;;
+            repository_dispatch)
+              run_readme="false"
+              run_feed="false"
+              ;;
+            push)
+              run_feed="false"
+              run_pipeline="false"
+              run_readme="false"
+              changed_files=$(jq -r '.commits[]? | (.added + .modified + .removed)[]?' "$GITHUB_EVENT_PATH" 2>/dev/null || true)
+              if echo "$changed_files" | grep -E '^research/' >/dev/null; then
+                run_pipeline="true"
+              fi
+              if echo "$changed_files" | grep -E '^scripts/research/' >/dev/null; then
+                run_pipeline="true"
+              fi
+              if echo "$changed_files" | grep -Fx 'config/blogs.json' >/dev/null; then
+                run_readme="true"
+              fi
+              ;;
+            *)
+              :
+              ;;
+          esac
+
+          {
+            echo "product=$product"
+            echo "persona=$persona"
+            echo "lookback=$lookback"
+            echo "greeting=$greeting"
+            echo "run_pipeline=$run_pipeline"
+            echo "run_readme=$run_readme"
+            echo "run_feed=$run_feed"
+          } >> "$GITHUB_OUTPUT"
+
+  greeting:
+    name: Manual greeting check
+    needs: context
+    if: ${{ github.event_name == 'workflow_dispatch' && needs.context.outputs.greeting != env.DEFAULT_GREETING }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send greeting
+        run: echo "Hello ${{ needs.context.outputs.greeting }}"
+
+  stage1_keyword_research:
+    name: Stage 1 — Keyword Intelligence
+    needs: context
+    if: ${{ needs.context.outputs.run_pipeline == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      PRODUCT: ${{ needs.context.outputs.product }}
+      PERSONA: ${{ needs.context.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.context.outputs.lookback }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          check-latest: true
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            **/package-lock.json
+
+      - name: Install dependencies (with lockfile)
+        if: ${{ hashFiles('**/package-lock.json') != '' }}
+        run: npm ci
+
+      - name: Install dependencies (without lockfile)
+        if: ${{ hashFiles('**/package-lock.json') == '' }}
+        run: npm install
+
+      - name: Gather cross-platform keyword candidates
+        run: npm run research:gather --if-present
+
+      - name: Build keyword clusters
+        run: npm run research:cluster --if-present
+
+      - name: Auto-select best cluster with justification
+        run: npm run research:autoselect --if-present
+
+      - name: Create Accelerator SEO package
+        run: npm run research:seo:package --if-present
+
+      - name: Generate title seeds + hooks for Stage 2/3
+        run: npm run research:seeds --if-present
+
+      - name: Persist Stage 1 research artifacts
+        run: |
+          mkdir -p artifacts/stage1/research
+          cp -r research/output/* artifacts/stage1/research/ || true
+
+      - name: Upload Stage 1 research artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage1-research-node
+          path: artifacts/stage1/research/
+
+  stage1_content_strategy:
+    name: Stage 1 — Research & Strategy Synthesis
+    needs:
+      - context
+      - stage1_keyword_research
+    if: ${{ needs.context.outputs.run_pipeline == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      PRODUCT: ${{ needs.context.outputs.product }}
+      PERSONA_NAME: ${{ needs.context.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.context.outputs.lookback }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate Stage 1 research artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage1 \
+            --output-dir artifacts/stage1 \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 1 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage1-research
+          path: artifacts/stage1
+
+  stage2_creation:
+    name: Stage 2 — Blog Creation & Optimization
+    needs:
+      - context
+      - stage1_content_strategy
+    if: ${{ needs.context.outputs.run_pipeline == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      PRODUCT: ${{ needs.context.outputs.product }}
+      PERSONA_NAME: ${{ needs.context.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.context.outputs.lookback }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrieve Stage 1 research bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: stage1-research
+          path: artifacts/stage1
+
+      - name: Generate Stage 2 creation artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage2 \
+            --output-dir artifacts/stage2 \
+            --context artifacts/stage1/context.json \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 2 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2-creation
+          path: artifacts/stage2
+
+  stage3_distribution:
+    name: Stage 3 — Cross-Platform Distribution
+    needs:
+      - context
+      - stage2_creation
+    if: ${{ needs.context.outputs.run_pipeline == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      PRODUCT: ${{ needs.context.outputs.product }}
+      PERSONA_NAME: ${{ needs.context.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.context.outputs.lookback }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrieve Stage 2 bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: stage2-creation
+          path: artifacts/stage2
+
+      - name: Generate Stage 3 distribution artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage3 \
+            --output-dir artifacts/stage3 \
+            --context artifacts/stage2/context.json \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 3 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage3-distribution
+          path: artifacts/stage3
+
+  stage4_analytics:
+    name: Stage 4 — Analytics & Refinement
+    needs:
+      - context
+      - stage3_distribution
+    if: ${{ needs.context.outputs.run_pipeline == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      PRODUCT: ${{ needs.context.outputs.product }}
+      PERSONA_NAME: ${{ needs.context.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.context.outputs.lookback }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrieve Stage 3 bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: stage3-distribution
+          path: artifacts/stage3
+
+      - name: Generate Stage 4 analytics artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage4 \
+            --output-dir artifacts/stage4 \
+            --context artifacts/stage3/context.json \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 4 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4-analytics
+          path: artifacts/stage4
+
+  stage5_growth:
+    name: Stage 5 — Continuous Growth Loop
+    needs:
+      - context
+      - stage4_analytics
+    if: ${{ needs.context.outputs.run_pipeline == 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      PRODUCT: ${{ needs.context.outputs.product }}
+      PERSONA_NAME: ${{ needs.context.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.context.outputs.lookback }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrieve Stage 4 bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: stage4-analytics
+          path: artifacts/stage4
+
+      - name: Generate Stage 5 growth artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage5 \
+            --output-dir artifacts/stage5 \
+            --context artifacts/stage4/context.json \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 5 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage5-growth
+          path: artifacts/stage5
+
+  refresh_blog_readme:
+    name: Refresh blog post list
+    needs: context
+    if: ${{ needs.context.outputs.run_readme == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Refresh blog list
+        run: python scripts/python/update_readme.py
+
+      - name: Commit and push changes
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -am 'chore: refresh blog post list'
+            git push
+          else
+            echo 'No changes to commit.'
+
+  blog_feed_sync:
+    name: Sync external blog feed
+    needs: context
+    if: ${{ needs.context.outputs.run_feed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Pull in dev.to posts
+        uses: gautamkrishnar/blog-post-workflow@v1
+        with:
+          feed_list: https://understandman727.blogspot.com/feeds/posts/default
