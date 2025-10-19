@@ -46,34 +46,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          node-version: "20"
-          cache: "npm"
+          python-version: "3.11"
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: Gather cross-platform keyword candidates
-        run: npm run research:gather --if-present
-
-      - name: Build keyword clusters
-        run: npm run research:cluster --if-present
-
-      - name: Auto-select best cluster with justification
-        run: npm run research:autoselect --if-present
-
-      - name: Create Accelerator SEO package
-        run: npm run research:seo:package --if-present
-
-      - name: Generate title seeds + hooks for Stage 2/3
-        run: npm run research:seeds --if-present
-
-      - name: Persist artifacts
         run: |
-          mkdir -p artifacts/stage1
-          cp -r research/output/* artifacts/stage1/ || true
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Generate Stage 1 research artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage1 \
+            --output-dir artifacts/stage1 \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA}" \
+            --lookback-days "${LOOKBACK_DAYS}"
 
       - name: Upload Stage 1 artifacts
         uses: actions/upload-artifact@v4
