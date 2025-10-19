@@ -61,9 +61,13 @@ def cluster_metrics(cluster: Dict[str, Any]) -> Dict[str, Any]:
     weight = conv_weight.get(cluster.get("conversion_potential", "Medium"), 2.0)
     score = (total_volume * weight) + (avg_ctr * 1000) - (avg_difficulty * 45)
     top_keywords = sorted(keywords, key=lambda kw: kw["volume"], reverse=True)[:3]
-    pinterest_angles = list({kw.get("pinterest_angle", "") for kw in keywords})
-    meta_hooks = list({kw.get("meta_hook", "") for kw in keywords})
-    emotional_drivers = list({kw.get("emotional_driver", "") for kw in keywords})
+    pinterest_angles = list(
+        dict.fromkeys(kw.get("pinterest_angle", "") for kw in keywords)
+    )
+    meta_hooks = list(dict.fromkeys(kw.get("meta_hook", "") for kw in keywords))
+    emotional_drivers = list(
+        dict.fromkeys(kw.get("emotional_driver", "") for kw in keywords)
+    )
     return {
         "id": cluster["id"],
         "label": cluster["label"],
