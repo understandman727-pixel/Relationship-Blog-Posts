@@ -19,8 +19,7 @@ on:
         default: '30'
 
 permissions:
-  contents: write
-  actions: write
+  contents: read
 
 concurrency:
   group: blog-master-${{ github.ref }}
