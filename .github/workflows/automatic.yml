@@ -1,0 +1,214 @@
+name: Blog Post Workflow 2025 Master
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      product:
+        description: 'Affiliate product to research'
+        required: false
+        default: 'Wrap Him Around Your Finger'
+      persona:
+        description: 'Target persona label'
+        required: false
+        default: 'Heart-Led High Achiever'
+      lookback_days:
+        description: 'Recency window for trend data'
+        required: false
+        default: '30'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: blog-master-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PRODUCT: ${{ github.event_name == 'workflow_dispatch' && inputs.product || 'Wrap Him Around Your Finger' }}
+  PERSONA_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.persona || 'Heart-Led High Achiever' }}
+  LOOKBACK_DAYS: ${{ github.event_name == 'workflow_dispatch' && inputs.lookback_days || '30' }}
+
+jobs:
+  stage1_research:
+    name: Stage 1 — Research & Strategy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate Stage 1 research artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage1 \
+            --output-dir artifacts/stage1 \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 1 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage1-research
+          path: artifacts/stage1
+
+  stage2_creation:
+    name: Stage 2 — Blog Creation & Optimization
+    needs: stage1_research
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrieve Stage 1 research bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: stage1-research
+          path: artifacts/stage1
+
+      - name: Generate Stage 2 creation artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage2 \
+            --output-dir artifacts/stage2 \
+            --context artifacts/stage1/context.json \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 2 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2-creation
+          path: artifacts/stage2
+
+  stage3_distribution:
+    name: Stage 3 — Cross-Platform Distribution
+    needs: stage2_creation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrieve Stage 2 bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: stage2-creation
+          path: artifacts/stage2
+
+      - name: Generate Stage 3 distribution artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage3 \
+            --output-dir artifacts/stage3 \
+            --context artifacts/stage2/context.json \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 3 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage3-distribution
+          path: artifacts/stage3
+
+  stage4_analytics:
+    name: Stage 4 — Analytics & Refinement
+    needs: stage3_distribution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrieve Stage 3 bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: stage3-distribution
+          path: artifacts/stage3
+
+      - name: Generate Stage 4 analytics artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage4 \
+            --output-dir artifacts/stage4 \
+            --context artifacts/stage3/context.json \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 4 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage4-analytics
+          path: artifacts/stage4
+
+  stage5_growth:
+    name: Stage 5 — Continuous Growth Loop
+    needs: stage4_analytics
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install workflow dependencies
+        run: pip install -r requirements.txt
+
+      - name: Retrieve Stage 4 bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: stage4-analytics
+          path: artifacts/stage4
+
+      - name: Generate Stage 5 growth artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage5 \
+            --output-dir artifacts/stage5 \
+            --context artifacts/stage4/context.json \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA_NAME}" \
+            --lookback-days "${LOOKBACK_DAYS}"
+
+      - name: Upload Stage 5 artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage5-growth
+          path: artifacts/stage5

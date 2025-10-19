@@ -1,0 +1,305 @@
+{
+  "product": "Wrap Him Around Your Finger",
+  "audience": "Dating & Relationship Advice for Women",
+  "workflow_codename": "Blog_Post_Workflow_2025_Master_Version",
+  "objectives": {
+    "organic_revenue_target": "$300/day in organic affiliate sales from SEO + Social Traffic",
+    "affiliate_program": "ClickBank",
+    "brand_voice": "Empathetic, confident, data-backed with a warm feminine tone",
+    "brand_name": "Understanding Man"
+  },
+  "stage1": {
+    "persona": {
+      "name": "Heart-Led High Achiever",
+      "pain_points": [
+        "She worries he is emotionally drifting away despite her constant efforts.",
+        "She overthinks his texts and feels anxious about the future of the relationship.",
+        "She juggles career success with a craving for lasting romantic security.",
+        "She has tried generic relationship advice that felt manipulative or hollow."
+      ],
+      "desires": [
+        "To feel adored and prioritized without begging for attention.",
+        "To create effortless emotional intimacy rooted in mutual devotion.",
+        "To guide the relationship toward commitment while honoring her self-worth.",
+        "To align romantic energy with her long-term vision of partnership."
+      ],
+      "search_intent": [
+        "Actionable phrases that unlock a man's emotional availability.",
+        "Science-backed insights that explain male devotion and bonding.",
+        "Strategies that balance feminine magnetism with strong boundaries."
+      ],
+      "keyword_map": {
+        "primary": "phrases to make him obsessed",
+        "supporting": [
+          "feminine energy phrases",
+          "phrases to make him fall in love",
+          "how to make him commit",
+          "keep a man emotionally attached"
+        ]
+      }
+    },
+    "seo_templates": {
+      "title": "{primary_keyword} — {product} Strategy for {persona_short}",
+      "meta_description": "Discover how {product} helps {persona_short} use {primary_keyword} to spark lasting devotion, conversion-ready in {lookback_days}-day campaigns.",
+      "hooks": [
+        "Use hypnotic devotion phrases without sounding clingy.",
+        "Blend neuroscience and heart-led storytelling to hold his focus.",
+        "Transform anxious spirals into confident connection rituals.",
+        "Link daily micro-moments to long-term commitment milestones."
+      ]
+    },
+    "competitor_audit": [
+      {
+        "domain": "mindbodygreen.com",
+        "opportunity_keywords": [
+          "devotion phrases for men",
+          "emotional triggers for commitment"
+        ],
+        "serp_gap": "Strong authority but lacks first-person emotional scripts; tailor ours with sensory language and affiliate CTA."
+      },
+      {
+        "domain": "psychologytoday.com",
+        "opportunity_keywords": [
+          "psychology of male devotion",
+          "keep him emotionally attached"
+        ],
+        "serp_gap": "Great credibility but clinical tone. Inject empathetic storytelling tied to Wrap Him Around Your Finger."
+      },
+      {
+        "domain": "pairedlife.com",
+        "opportunity_keywords": [
+          "phrases to make him commit",
+          "signs he is emotionally invested"
+        ],
+        "serp_gap": "High engagement yet surface-level tips. Provide data-backed frameworks and CTA clarity."
+      }
+    ]
+  },
+  "stage2": {
+    "outline": {
+      "emotional_arc": [
+        "Shock-to-hope opening demonstrating reader's current anxiety.",
+        "Middle sections showing transformation through emotional scripting.",
+        "Closing vision that cements devotion and introduces offer."
+      ],
+      "external_links": [
+        "https://www.psychologytoday.com/us",
+        "https://www.mindbodygreen.com/",
+        "https://time.com/section/relationships/",
+        "https://www.gottman.com/blog/"
+      ],
+      "internal_links": [
+        "https://understandingman.com/maintain-emotional-connection",
+        "https://understandingman.com/feminine-energy-boundaries",
+        "https://understandingman.com/mirabelle-summers-review"
+      ],
+      "affiliate_prompt": "Please provide the exact affiliate link for Wrap Him Around Your Finger before finalizing the draft.",
+      "sections": [
+        {
+          "heading": "The Devotion Gap: Why Smart Women Feel Him Pull Away",
+          "themes": [
+            "Expose the silent panic when his texts slow down and she imagines worst-case scenarios.",
+            "Validate her success everywhere else but love, creating immediate rapport.",
+            "Introduce the idea that language patterns can reset his emotional compass."
+          ]
+        },
+        {
+          "heading": "Decode His Attachment Circuitry",
+          "themes": [
+            "Explain the neuroscience behind male bonding using plain language.",
+            "Tie in oxytocin, dopamine, and safety cues she can trigger with phrases.",
+            "Bust myths about playing hard to get and replace with authentic influence."
+          ]
+        },
+        {
+          "heading": "Five Emotionally Charged Keyword Scripts",
+          "themes": [
+            "Deliver five ready-to-use phrases tuned to the winning keyword cluster.",
+            "Pair each phrase with the emotional response it activates.",
+            "Outline how to deploy the scripts over text, voice, and in-person moments."
+          ]
+        },
+        {
+          "heading": "Create a Wrap-Him Ritual",
+          "themes": [
+            "Map a weekly cadence blending nurturing texts with confident boundaries.",
+            "Show how micro-wins stack into predictable devotion.",
+            "Highlight the role of soft power and feminine leadership."
+          ]
+        },
+        {
+          "heading": "Pinterest-Ready Visual Storyboarding",
+          "themes": [
+            "Translate the article's energy into board concepts and Pin copy.",
+            "Share three imagery angles that mirror the cluster's emotional driver.",
+            "Insert CTA language that feels luxurious and inviting."
+          ]
+        },
+        {
+          "heading": "FAQ: Answer Her Internal Objections",
+          "themes": [
+            "Address fears about manipulation or sounding fake.",
+            "Clarify timing expectations for seeing results.",
+            "Reassure on maintaining self-worth while using scripts."
+          ]
+        },
+        {
+          "heading": "Case Study Snapshot",
+          "themes": [
+            "Present a mini-story of a reader using the ritual to spark commitment.",
+            "Quantify the before-and-after emotional tone.",
+            "Lead naturally into the Wrap Him Around Your Finger offer."
+          ]
+        },
+        {
+          "heading": "Conversion Power Moves",
+          "themes": [
+            "List CTAs for blog, email, and social placements.",
+            "Recommend anchor text for internal and external links.",
+            "Emphasize the ClickBank tracking link strategy."
+          ]
+        },
+        {
+          "heading": "Final Empowerment Close",
+          "themes": [
+            "Reinforce she is the strategist, not the pursuer.",
+            "Align devotion with her long-term vision of partnership.",
+            "Invite her to take the next step with Mirabelle Summers."
+          ]
+        }
+      ]
+    },
+    "faq": [
+      {
+        "question": "Will these phrases make me sound manipulative?",
+        "answer": "Focus on sincere appreciation and shared vision; authenticity keeps the scripts loving instead of controlling."
+      },
+      {
+        "question": "How quickly will I see results?",
+        "answer": "Most readers notice warmer responses within days and see commitment cues within a few consistent weeks."
+      },
+      {
+        "question": "Can I use this if we are long-distance?",
+        "answer": "Yes—blend voice notes, intentional texts, and planned visits to reinforce safety from afar."
+      }
+    ],
+    "seo_package_keywords": [
+      "phrases to make him obsessed",
+      "devotion scripts for men",
+      "keep him emotionally attached",
+      "feminine energy texting",
+      "wrap him around your finger review"
+    ],
+    "image_brief": {
+      "hero_alt_text": "woman smiling while reading heartfelt text message with romantic city skyline",
+      "thumbnails": [
+        "Soft blush background with overlay text 'Devotion Scripts That Work'",
+        "Couple laughing on rooftop during golden hour",
+        "Flat lay of journal, phone, and rose quartz bracelet"
+      ]
+    }
+  },
+  "stage3": {
+    "prompts": [
+      "Trend Spotter",
+      "Content Angle Generator",
+      "Ad Opportunity Finder",
+      "Hashtag & Keyword Booster",
+      "Community Pulse Check",
+      "Meta Content Creator Prompt"
+    ],
+    "platforms": {
+      "Meta": {
+        "post_structure": [
+          "Emotional caption from blog hook",
+          "CTA: \"Read the full article — link in bio 💕\"",
+          "Tagged accounts list"
+        ],
+        "posting_times": [
+          "Tuesday 6:30 PM CST",
+          "Friday 6:30 PM CST"
+        ]
+      },
+      "Pinterest": {
+        "posts": 3,
+        "concepts": [
+          "Blog title overlay",
+          "Quote pin",
+          "Soft feminine photo"
+        ],
+        "best_time": "Saturday 10:00 AM CST"
+      },
+      "Medium": {
+        "topics": [
+          "Relationships",
+          "Psychology",
+          "Emotional Intelligence",
+          "Self Improvement",
+          "Love & Dating"
+        ],
+        "schedule": [
+          "Tuesday 9:00 AM EST",
+          "Thursday 9:00 AM EST",
+          "Sunday 10:00 AM EST"
+        ]
+      },
+      "YouTube_Shorts_Reels": {
+        "prompts": 5,
+        "posting_schedule": [
+          "IG/FB Reels Tue & Fri 6:30 PM CST",
+          "YouTube Shorts Thu 9:00 AM CST",
+          "Pinterest Idea Pin Sat 10:00 AM CST"
+        ]
+      }
+    }
+  },
+  "stage4": {
+    "analytics_systems": {
+      "GSC_Optimization_Report": {
+        "description": "Track impressions, CTR, keyword trends."
+      },
+      "Affiliate_ROI_Integration": {
+        "metrics": [
+          "Hops",
+          "Conversions",
+          "EPC",
+          "Refund Rate"
+        ],
+        "tracking_id": "?tid=understandingman_blog_[slug]"
+      },
+      "Social_ROI_Integration": {
+        "metrics": [
+          "Reach",
+          "Engagement",
+          "CTR",
+          "View Duration"
+        ]
+      },
+      "Pinterest_ROI_Integration": {
+        "metrics": [
+          "Impressions",
+          "Saves",
+          "CTR"
+        ]
+      },
+      "Cross_Platform_ROI_Dashboard": {
+        "combines": [
+          "GSC",
+          "GA4",
+          "ClickBank",
+          "Meta",
+          "Pinterest"
+        ]
+      }
+    }
+  },
+  "stage5": {
+    "actions": [
+      "Refresh keywords every 90 days",
+      "Re-index top articles",
+      "Repurpose best Reels as ads",
+      "Boost 1 high-ROI post weekly",
+      "Perform monthly Pareto review"
+    ]
+  }
+}
