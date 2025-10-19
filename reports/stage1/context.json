@@ -1,0 +1,454 @@
+{
+  "generated_on": "2025-10-19",
+  "product": "Wrap Him Around Your Finger",
+  "persona_name": "Heart-Led High Achiever",
+  "lookback_days": 30,
+  "winning_cluster": {
+    "id": "devotional_language",
+    "label": "Devotion Language Scripts",
+    "core_emotion": "Reassurance & Safety",
+    "conversion_potential": "High",
+    "product_compatibility": "The phrases mirror Wrap Him Around Your Finger's focus on emotional scripting and devotion triggers.",
+    "notes": "Perfect for women craving reliable closeness and quick wins via text and spoken cues.",
+    "total_volume": 78700,
+    "avg_difficulty": 30.8,
+    "avg_ctr": 0.17,
+    "score": 234884.0,
+    "keywords": [
+      {
+        "term": "phrases to make him obsessed",
+        "volume": 40500,
+        "difficulty": 34,
+        "intent": "Transactional",
+        "ctr_estimate": 0.19,
+        "pinterest_angle": "Soft feminine typography listing devotion phrases",
+        "meta_hook": "Try these two-sentence scripts before your next date night",
+        "emotional_driver": "Certainty"
+      },
+      {
+        "term": "phrases to make him fall in love",
+        "volume": 14800,
+        "difficulty": 28,
+        "intent": "Transactional",
+        "ctr_estimate": 0.18,
+        "pinterest_angle": "Romantic text bubbles with blush gradients",
+        "meta_hook": "Speak the language that melts his guard in seconds",
+        "emotional_driver": "Hope"
+      },
+      {
+        "term": "how to make him commit",
+        "volume": 9900,
+        "difficulty": 36,
+        "intent": "Commercial",
+        "ctr_estimate": 0.15,
+        "pinterest_angle": "Vision board of long-term love milestones",
+        "meta_hook": "Shift from girlfriend energy to forever partner",
+        "emotional_driver": "Security"
+      },
+      {
+        "term": "keep a man emotionally attached",
+        "volume": 8100,
+        "difficulty": 30,
+        "intent": "Commercial",
+        "ctr_estimate": 0.17,
+        "pinterest_angle": "Couple embracing on balcony at sunset",
+        "meta_hook": "Lock in his focus with one nightly ritual",
+        "emotional_driver": "Belonging"
+      },
+      {
+        "term": "feminine energy phrases",
+        "volume": 5400,
+        "difficulty": 26,
+        "intent": "Informational",
+        "ctr_estimate": 0.16,
+        "pinterest_angle": "Soft flowing dresses and handwritten affirmations",
+        "meta_hook": "Blend soft power with magnetic boundaries",
+        "emotional_driver": "Grace"
+      }
+    ],
+    "top_keywords": [
+      "phrases to make him obsessed",
+      "phrases to make him fall in love",
+      "how to make him commit"
+    ],
+    "pinterest_angles": [
+      "Soft feminine typography listing devotion phrases",
+      "Romantic text bubbles with blush gradients",
+      "Vision board of long-term love milestones",
+      "Couple embracing on balcony at sunset",
+      "Soft flowing dresses and handwritten affirmations"
+    ],
+    "meta_hooks": [
+      "Try these two-sentence scripts before your next date night",
+      "Speak the language that melts his guard in seconds",
+      "Shift from girlfriend energy to forever partner",
+      "Lock in his focus with one nightly ritual",
+      "Blend soft power with magnetic boundaries"
+    ],
+    "emotional_drivers": [
+      "Certainty",
+      "Hope",
+      "Security",
+      "Belonging",
+      "Grace"
+    ]
+  },
+  "primary_keyword": "phrases to make him obsessed",
+  "seo_title": "Phrases To Make Him Obsessed \u2014 Wrap Him Around Your Finger Strategy for Heart-Led High Achiever",
+  "meta_description": "Discover how Wrap Him Around Your Finger helps Heart-Led High Achiever use phrases to make him obsessed to spark lasting devotion, conversion-ready in 30-day campaigns.",
+  "seo_hooks": [
+    "Use hypnotic devotion phrases without sounding clingy.",
+    "Blend neuroscience and heart-led storytelling to hold his focus.",
+    "Transform anxious spirals into confident connection rituals.",
+    "Link daily micro-moments to long-term commitment milestones."
+  ],
+  "persona_profile": {
+    "name": "Heart-Led High Achiever",
+    "pain_points": [
+      "She worries he is emotionally drifting away despite her constant efforts.",
+      "She overthinks his texts and feels anxious about the future of the relationship.",
+      "She juggles career success with a craving for lasting romantic security.",
+      "She has tried generic relationship advice that felt manipulative or hollow."
+    ],
+    "desires": [
+      "To feel adored and prioritized without begging for attention.",
+      "To create effortless emotional intimacy rooted in mutual devotion.",
+      "To guide the relationship toward commitment while honoring her self-worth.",
+      "To align romantic energy with her long-term vision of partnership."
+    ],
+    "search_intent": [
+      "Actionable phrases that unlock a man's emotional availability.",
+      "Science-backed insights that explain male devotion and bonding.",
+      "Strategies that balance feminine magnetism with strong boundaries."
+    ],
+    "keyword_map": {
+      "primary": "phrases to make him obsessed",
+      "supporting": [
+        "feminine energy phrases",
+        "phrases to make him fall in love",
+        "how to make him commit",
+        "keep a man emotionally attached"
+      ]
+    }
+  },
+  "clusters": [
+    {
+      "id": "devotional_language",
+      "label": "Devotion Language Scripts",
+      "core_emotion": "Reassurance & Safety",
+      "conversion_potential": "High",
+      "product_compatibility": "The phrases mirror Wrap Him Around Your Finger's focus on emotional scripting and devotion triggers.",
+      "notes": "Perfect for women craving reliable closeness and quick wins via text and spoken cues.",
+      "total_volume": 78700,
+      "avg_difficulty": 30.8,
+      "avg_ctr": 0.17,
+      "score": 234884.0,
+      "keywords": [
+        {
+          "term": "phrases to make him obsessed",
+          "volume": 40500,
+          "difficulty": 34,
+          "intent": "Transactional",
+          "ctr_estimate": 0.19,
+          "pinterest_angle": "Soft feminine typography listing devotion phrases",
+          "meta_hook": "Try these two-sentence scripts before your next date night",
+          "emotional_driver": "Certainty"
+        },
+        {
+          "term": "phrases to make him fall in love",
+          "volume": 14800,
+          "difficulty": 28,
+          "intent": "Transactional",
+          "ctr_estimate": 0.18,
+          "pinterest_angle": "Romantic text bubbles with blush gradients",
+          "meta_hook": "Speak the language that melts his guard in seconds",
+          "emotional_driver": "Hope"
+        },
+        {
+          "term": "how to make him commit",
+          "volume": 9900,
+          "difficulty": 36,
+          "intent": "Commercial",
+          "ctr_estimate": 0.15,
+          "pinterest_angle": "Vision board of long-term love milestones",
+          "meta_hook": "Shift from girlfriend energy to forever partner",
+          "emotional_driver": "Security"
+        },
+        {
+          "term": "keep a man emotionally attached",
+          "volume": 8100,
+          "difficulty": 30,
+          "intent": "Commercial",
+          "ctr_estimate": 0.17,
+          "pinterest_angle": "Couple embracing on balcony at sunset",
+          "meta_hook": "Lock in his focus with one nightly ritual",
+          "emotional_driver": "Belonging"
+        },
+        {
+          "term": "feminine energy phrases",
+          "volume": 5400,
+          "difficulty": 26,
+          "intent": "Informational",
+          "ctr_estimate": 0.16,
+          "pinterest_angle": "Soft flowing dresses and handwritten affirmations",
+          "meta_hook": "Blend soft power with magnetic boundaries",
+          "emotional_driver": "Grace"
+        }
+      ],
+      "top_keywords": [
+        "phrases to make him obsessed",
+        "phrases to make him fall in love",
+        "how to make him commit"
+      ],
+      "pinterest_angles": [
+        "Soft feminine typography listing devotion phrases",
+        "Romantic text bubbles with blush gradients",
+        "Vision board of long-term love milestones",
+        "Couple embracing on balcony at sunset",
+        "Soft flowing dresses and handwritten affirmations"
+      ],
+      "meta_hooks": [
+        "Try these two-sentence scripts before your next date night",
+        "Speak the language that melts his guard in seconds",
+        "Shift from girlfriend energy to forever partner",
+        "Lock in his focus with one nightly ritual",
+        "Blend soft power with magnetic boundaries"
+      ],
+      "emotional_drivers": [
+        "Certainty",
+        "Hope",
+        "Security",
+        "Belonging",
+        "Grace"
+      ]
+    },
+    {
+      "id": "healing_intimacy",
+      "label": "Healing Intimacy Reset",
+      "core_emotion": "Healing & Renewal",
+      "conversion_potential": "Medium",
+      "product_compatibility": "Pairs Wrap Him Around Your Finger's core frameworks with forgiveness and trust rebuilding.",
+      "notes": "Ideal for readers coming off relationship friction or micro-breakups.",
+      "total_volume": 20400,
+      "avg_difficulty": 31,
+      "avg_ctr": 0.12333333333333334,
+      "score": 39528.333333333336,
+      "keywords": [
+        {
+          "term": "how to reconnect with your boyfriend",
+          "volume": 12100,
+          "difficulty": 33,
+          "intent": "Informational",
+          "ctr_estimate": 0.14,
+          "pinterest_angle": "Couple journaling together in cozy living room",
+          "meta_hook": "A 48-hour reset that soothes nerves and restarts intimacy",
+          "emotional_driver": "Relief"
+        },
+        {
+          "term": "emotional intimacy exercises",
+          "volume": 5400,
+          "difficulty": 29,
+          "intent": "Informational",
+          "ctr_estimate": 0.12,
+          "pinterest_angle": "Guided journal prompts with candlelight",
+          "meta_hook": "Use two-minute exercises that unlock his real feelings",
+          "emotional_driver": "Calm"
+        },
+        {
+          "term": "relationship healing rituals",
+          "volume": 2900,
+          "difficulty": 31,
+          "intent": "Informational",
+          "ctr_estimate": 0.11,
+          "pinterest_angle": "Bath ritual with rose petals and affirmations",
+          "meta_hook": "Even strong women need space to heal together",
+          "emotional_driver": "Safety"
+        }
+      ],
+      "top_keywords": [
+        "how to reconnect with your boyfriend",
+        "emotional intimacy exercises",
+        "relationship healing rituals"
+      ],
+      "pinterest_angles": [
+        "Couple journaling together in cozy living room",
+        "Guided journal prompts with candlelight",
+        "Bath ritual with rose petals and affirmations"
+      ],
+      "meta_hooks": [
+        "A 48-hour reset that soothes nerves and restarts intimacy",
+        "Use two-minute exercises that unlock his real feelings",
+        "Even strong women need space to heal together"
+      ],
+      "emotional_drivers": [
+        "Relief",
+        "Calm",
+        "Safety"
+      ]
+    },
+    {
+      "id": "high_value_boundary",
+      "label": "High-Value Boundary Scripts",
+      "core_emotion": "Empowered Desire",
+      "conversion_potential": "High",
+      "product_compatibility": "Wrap Him Around Your Finger frames boundaries as attraction amplifiers\u2014this cluster mirrors that angle.",
+      "notes": "For women balancing warmth with standards, ideal for affiliate conversion messaging.",
+      "total_volume": 14600,
+      "avg_difficulty": 25.333333333333332,
+      "avg_ctr": 0.13666666666666666,
+      "score": 42796.666666666664,
+      "keywords": [
+        {
+          "term": "high value woman phrases",
+          "volume": 6600,
+          "difficulty": 27,
+          "intent": "Transactional",
+          "ctr_estimate": 0.16,
+          "pinterest_angle": "Confident woman walking in city at sunrise",
+          "meta_hook": "Claim devotion without chasing or overgiving",
+          "emotional_driver": "Empowerment"
+        },
+        {
+          "term": "feminine boundaries in dating",
+          "volume": 4400,
+          "difficulty": 24,
+          "intent": "Informational",
+          "ctr_estimate": 0.13,
+          "pinterest_angle": "Stylish woman journaling with latte",
+          "meta_hook": "Set standards that feel magnetic, not icy",
+          "emotional_driver": "Confidence"
+        },
+        {
+          "term": "how to stop overgiving in relationships",
+          "volume": 3600,
+          "difficulty": 25,
+          "intent": "Informational",
+          "ctr_estimate": 0.12,
+          "pinterest_angle": "Hands releasing petals into wind",
+          "meta_hook": "Shift from anxious chasing to soft command",
+          "emotional_driver": "Freedom"
+        }
+      ],
+      "top_keywords": [
+        "high value woman phrases",
+        "feminine boundaries in dating",
+        "how to stop overgiving in relationships"
+      ],
+      "pinterest_angles": [
+        "Confident woman walking in city at sunrise",
+        "Stylish woman journaling with latte",
+        "Hands releasing petals into wind"
+      ],
+      "meta_hooks": [
+        "Claim devotion without chasing or overgiving",
+        "Set standards that feel magnetic, not icy",
+        "Shift from anxious chasing to soft command"
+      ],
+      "emotional_drivers": [
+        "Empowerment",
+        "Confidence",
+        "Freedom"
+      ]
+    },
+    {
+      "id": "magnetic_storytelling",
+      "label": "Magnetic Storytelling",
+      "core_emotion": "Romantic Anticipation",
+      "conversion_potential": "Medium",
+      "product_compatibility": "Connects product scripts to creative storytelling cues for social content.",
+      "notes": "Supports cross-platform distribution with narrative hooks and micro stories.",
+      "total_volume": 5300,
+      "avg_difficulty": 29,
+      "avg_ctr": 0.10500000000000001,
+      "score": 9400.0,
+      "keywords": [
+        {
+          "term": "romantic storytelling techniques",
+          "volume": 2900,
+          "difficulty": 35,
+          "intent": "Informational",
+          "ctr_estimate": 0.1,
+          "pinterest_angle": "Notebook with polaroids and pressed flowers",
+          "meta_hook": "Spark cinematic moments he can't stop replaying",
+          "emotional_driver": "Excitement"
+        },
+        {
+          "term": "love story prompts for couples",
+          "volume": 2400,
+          "difficulty": 23,
+          "intent": "Informational",
+          "ctr_estimate": 0.11,
+          "pinterest_angle": "Couple recording memories on vintage camcorder",
+          "meta_hook": "Turn daily routines into devotion scenes",
+          "emotional_driver": "Joy"
+        }
+      ],
+      "top_keywords": [
+        "romantic storytelling techniques",
+        "love story prompts for couples"
+      ],
+      "pinterest_angles": [
+        "Notebook with polaroids and pressed flowers",
+        "Couple recording memories on vintage camcorder"
+      ],
+      "meta_hooks": [
+        "Spark cinematic moments he can't stop replaying",
+        "Turn daily routines into devotion scenes"
+      ],
+      "emotional_drivers": [
+        "Excitement",
+        "Joy"
+      ]
+    },
+    {
+      "id": "commitment_microwins",
+      "label": "Commitment Micro-Wins",
+      "core_emotion": "Stability & Momentum",
+      "conversion_potential": "Medium",
+      "product_compatibility": "Aligns with micro-commitment ladder inside Wrap Him Around Your Finger.",
+      "notes": "Best for bridging from blog to email funnels and challenge opt-ins.",
+      "total_volume": 3200,
+      "avg_difficulty": 30.5,
+      "avg_ctr": 0.095,
+      "score": 5122.5,
+      "keywords": [
+        {
+          "term": "micro commitment examples",
+          "volume": 1900,
+          "difficulty": 32,
+          "intent": "Informational",
+          "ctr_estimate": 0.09,
+          "pinterest_angle": "Checklist graphic with rose gold accents",
+          "meta_hook": "Stack mini yeses into forever devotion",
+          "emotional_driver": "Progress"
+        },
+        {
+          "term": "keep him invested long term",
+          "volume": 1300,
+          "difficulty": 29,
+          "intent": "Informational",
+          "ctr_estimate": 0.1,
+          "pinterest_angle": "Couple planning travel itinerary",
+          "meta_hook": "From daily rituals to life-long loyalty",
+          "emotional_driver": "Vision"
+        }
+      ],
+      "top_keywords": [
+        "micro commitment examples",
+        "keep him invested long term"
+      ],
+      "pinterest_angles": [
+        "Checklist graphic with rose gold accents",
+        "Couple planning travel itinerary"
+      ],
+      "meta_hooks": [
+        "Stack mini yeses into forever devotion",
+        "From daily rituals to life-long loyalty"
+      ],
+      "emotional_drivers": [
+        "Progress",
+        "Vision"
+      ]
+    }
+  ]
+}
