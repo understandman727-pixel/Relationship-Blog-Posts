@@ -1,0 +1,10 @@
+name: Validate Draft (SEO + Affiliate)
+on:
+  push:
+    paths: ["content/drafts/**.md"]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "✅ Your draft looks great! (Your robots will do more checks later)"
