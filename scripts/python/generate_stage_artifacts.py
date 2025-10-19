@@ -19,6 +19,17 @@ KEYWORD_DATA_PATH = ROOT / "data" / "keyword_clusters.json"
 CONTEXT_SHARED_PATH = ROOT / "artifacts" / "context.json"
 
 
+def dedupe_preserve_order(values: Iterable[str]) -> List[str]:
+    seen = set()
+    ordered: List[str] = []
+    for value in values:
+        if value in seen:
+            continue
+        seen.add(value)
+        ordered.append(value)
+    return ordered
+
+
 def load_config() -> Dict[str, Any]:
     with CONFIG_PATH.open("r", encoding="utf-8") as fh:
         return json.load(fh)
@@ -61,9 +72,11 @@ def cluster_metrics(cluster: Dict[str, Any]) -> Dict[str, Any]:
     weight = conv_weight.get(cluster.get("conversion_potential", "Medium"), 2.0)
     score = (total_volume * weight) + (avg_ctr * 1000) - (avg_difficulty * 45)
     top_keywords = sorted(keywords, key=lambda kw: kw["volume"], reverse=True)[:3]
-    pinterest_angles = list({kw.get("pinterest_angle", "") for kw in keywords})
-    meta_hooks = list({kw.get("meta_hook", "") for kw in keywords})
-    emotional_drivers = list({kw.get("emotional_driver", "") for kw in keywords})
+    pinterest_angles = dedupe_preserve_order(kw.get("pinterest_angle", "") for kw in keywords)
+    meta_hooks = dedupe_preserve_order(kw.get("meta_hook", "") for kw in keywords)
+    emotional_drivers = dedupe_preserve_order(
+        kw.get("emotional_driver", "") for kw in keywords
+    )
     return {
         "id": cluster["id"],
         "label": cluster["label"],

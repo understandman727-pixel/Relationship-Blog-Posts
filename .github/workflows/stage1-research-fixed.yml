@@ -47,43 +47,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '20'
-          check-latest: true
-          cache: 'npm'
-          cache-dependency-path: |
-            package-lock.json
-            **/package-lock.json
+          python-version: '3.11'
 
-      - name: Install dependencies (with lockfile)
-        if: ${{ hashFiles('**/package-lock.json') != '' }}
-        run: npm ci
-
-      - name: Install dependencies (without lockfile)
-        if: ${{ hashFiles('**/package-lock.json') == '' }}
-        run: npm install
-
-      - name: Gather cross-platform keyword candidates
-        run: npm run research:gather --if-present
-
-      - name: Build keyword clusters
-        run: npm run research:cluster --if-present
-
-      - name: Auto-select best cluster with justification
-        run: npm run research:autoselect --if-present
-
-      - name: Create Accelerator SEO package
-        run: npm run research:seo:package --if-present
-
-      - name: Generate title seeds + hooks for Stage 2/3
-        run: npm run research:seeds --if-present
-
-      - name: Persist artifacts
+      - name: Install dependencies
         run: |
-          mkdir -p artifacts/stage1
-          cp -r research/output/* artifacts/stage1/ || true
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Generate Stage 1 research artifacts
+        run: |
+          python scripts/python/generate_stage_artifacts.py stage1 \
+            --output-dir artifacts/stage1 \
+            --product "${PRODUCT}" \
+            --persona-name "${PERSONA}" \
+            --lookback-days "${LOOKBACK_DAYS}"
 
       - name: Upload Stage 1 artifacts
         uses: actions/upload-artifact@v4

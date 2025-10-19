@@ -12,3 +12,4 @@ The blog roll above is refreshed by the [`scripts/python/update_readme.py`](scri
 
 - Run it locally with `python scripts/python/update_readme.py --offline` to use the bundled sample feed when network access is restricted.
 - In GitHub, the workflow at [`.github/workflows/update-readme.yml`](.github/workflows/update-readme.yml) runs the script daily, on manual dispatch, and whenever the feed configuration at [`config/blogs.json`](config/blogs.json) changes so the list stays up to date.
+- This Python workflow is the sole automation managing the `<!-- BLOG-POST-LIST -->` markers; the previous hourly `blog-post-workflow` action has been retired to prevent formatting conflicts.
