@@ -1,0 +1,119 @@
+name: Stage 1 — Research & Keyword Cluster Selection
+
+on:
+  workflow_dispatch:
+    inputs:
+      product:
+        description: "Affiliate product (e.g., Wrap Him Around Your Finger)"
+        required: true
+        default: "Wrap Him Around Your Finger"
+      persona:
+        description: "Target persona (e.g., Dating & Relationship Advice for Women)"
+        required: true
+        default: "Dating & Relationship Advice for Women"
+      final_live_url:
+        description: "Final live URL of the blog post (from ClickBank Accelerator) — per Stage 3 · Step 1 rule"
+        required: true
+      affiliate_link:
+        description: "Exact affiliate link incl. TID (e.g., https://example.hop.clickbank.net/?tid=understandingman_blog_[slug])"
+        required: true
+      slug:
+        description: "Planned blog slug (kebab-case, used for TID + filenames)"
+        required: true
+      lookback_days:
+        description: "Recency window for trends/keywords (e.g., 30)"
+        required: false
+        default: "30"
+
+  repository_dispatch:
+    types: [stage1_start, notion_brief_updated]
+
+  push:
+    branches: [ main ]
+    paths:
+      - "research/**"
+      - "scripts/research/**"
+      - ".github/workflows/stage1-research.yml"
+
+permissions:
+  contents: write
+  actions: read
+  id-token: write
+
+concurrency:
+  group: stage1-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PRODUCT: ${{ inputs.product || github.event.client_payload.product || 'Wrap Him Around Your Finger' }}
+  PERSONA: ${{ inputs.persona || github.event.client_payload.persona || 'Dating & Relationship Advice for Women' }}
+  FINAL_LIVE_URL: ${{ inputs.final_live_url || github.event.client_payload.final_live_url }}
+  AFFILIATE_LINK: ${{ inputs.affiliate_link || github.event.client_payload.affiliate_link }}
+  SLUG: ${{ inputs.slug || github.event.client_payload.slug }}
+  LOOKBACK_DAYS: ${{ inputs.lookback_days || github.event.client_payload.lookback_days || '30' }}
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate required inputs
+        shell: bash
+        run: |
+          fail() { echo "::error::$1"; exit 1; }
+          [[ -n "${FINAL_LIVE_URL}" ]] || fail "final_live_url is required (Stage 3 · Step 1 rule)."
+          [[ -n "${AFFILIATE_LINK}" ]] || fail "affiliate_link is required (Stage 2 · Step 6 rule)."
+          [[ -n "${SLUG}" ]] || fail "slug is required."
+          if [[ "${AFFILIATE_LINK}" != *"${SLUG}"* ]]; then
+            echo "::warning::Affiliate link TID may not include slug. Expected pattern: ?tid=understandingman_blog_${SLUG}"
+          else
+            echo "TID contains slug ✔"
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Gather cross-platform keyword candidates
+        run: npm run research:gather --if-present
+
+      - name: Build keyword clusters
+        run: npm run research:cluster --if-present
+
+      - name: Auto-select best cluster with justification
+        run: npm run research:autoselect --if-present
+
+      - name: Create Accelerator SEO package
+        run: npm run research:seo:package --if-present
+
+      - name: Generate title seeds + hooks for Stage 2/3
+        run: npm run research:seeds --if-present
+
+      - name: Persist artifacts
+        run: |
+          mkdir -p artifacts/stage1
+          cp -r research/output/* artifacts/stage1/ || true
+
+      - name: Upload Stage 1 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage1-research-${{ env.SLUG }}
+          path: artifacts/stage1/
+
+      - name: Commit selected cluster + SEO package
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          mkdir -p research/results/${SLUG}
+          cp artifacts/stage1/* research/results/${SLUG}/ || true
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add research/results/${SLUG} || true
+          git commit -m "Stage 1 outputs for ${SLUG}" || echo "No changes"
+          git push || true
