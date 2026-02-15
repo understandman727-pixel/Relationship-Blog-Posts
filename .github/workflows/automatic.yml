@@ -25,18 +25,58 @@ concurrency:
   group: blog-master-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  PRODUCT: ${{ github.event_name == 'workflow_dispatch' && inputs.product || 'Wrap Him Around Your Finger' }}
-  PERSONA_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.persona || 'Heart-Led High Achiever' }}
-  LOOKBACK_DAYS: ${{ github.event_name == 'workflow_dispatch' && inputs.lookback_days || '30' }}
-
 jobs:
   stage1_research:
     name: Stage 1 — Research & Strategy
     runs-on: ubuntu-latest
+    outputs:
+      product: ${{ steps.resolve_inputs.outputs.product }}
+      persona: ${{ steps.resolve_inputs.outputs.persona }}
+      lookback_days: ${{ steps.resolve_inputs.outputs.lookback_days }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Resolve workflow inputs
+        id: resolve_inputs
+        run: |
+          python3 <<'PY'
+          import json
+          import os
+
+          defaults = {
+              "product": "Wrap Him Around Your Finger",
+              "persona": "Heart-Led High Achiever",
+              "lookback_days": "30",
+          }
+
+          event_path = os.environ.get("GITHUB_EVENT_PATH")
+          data = {}
+          if event_path and os.path.exists(event_path):
+              with open(event_path, "r", encoding="utf-8") as handle:
+                  data = json.load(handle)
+
+          inputs = (data.get("inputs") or {})
+          client_payload = (data.get("client_payload") or {})
+
+          product = inputs.get("product") or client_payload.get("product") or defaults["product"]
+          persona = inputs.get("persona") or client_payload.get("persona") or defaults["persona"]
+          lookback_days = inputs.get("lookback_days") or client_payload.get("lookback_days") or defaults["lookback_days"]
+
+          output_path = os.environ["GITHUB_OUTPUT"]
+          with open(output_path, "w", encoding="utf-8") as fh:
+              fh.write(f"product={product}\n")
+              fh.write(f"persona={persona}\n")
+              fh.write(f"lookback_days={lookback_days}\n")
+          PY
+
+      - name: Export runtime configuration
+        run: |
+          {
+            echo "PRODUCT=${{ steps.resolve_inputs.outputs.product }}"
+            echo "PERSONA_NAME=${{ steps.resolve_inputs.outputs.persona }}"
+            echo "LOOKBACK_DAYS=${{ steps.resolve_inputs.outputs.lookback_days }}"
+          } >> "$GITHUB_ENV"
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -65,6 +105,14 @@ jobs:
     name: Stage 2 — Blog Creation & Optimization
     needs: stage1_research
     runs-on: ubuntu-latest
+    outputs:
+      product: ${{ steps.forward_configuration.outputs.product }}
+      persona: ${{ steps.forward_configuration.outputs.persona }}
+      lookback_days: ${{ steps.forward_configuration.outputs.lookback_days }}
+    env:
+      PRODUCT: ${{ needs.stage1_research.outputs.product }}
+      PERSONA_NAME: ${{ needs.stage1_research.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.stage1_research.outputs.lookback_days }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -93,6 +141,15 @@ jobs:
             --persona-name "${PERSONA_NAME}" \
             --lookback-days "${LOOKBACK_DAYS}"
 
+      - name: Forward configuration for downstream stages
+        id: forward_configuration
+        run: |
+          {
+            printf 'product=%s\n' "${PRODUCT}"
+            printf 'persona=%s\n' "${PERSONA_NAME}"
+            printf 'lookback_days=%s\n' "${LOOKBACK_DAYS}"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Upload Stage 2 artifact bundle
         uses: actions/upload-artifact@v4
         with:
@@ -101,8 +158,18 @@ jobs:
 
   stage3_distribution:
     name: Stage 3 — Cross-Platform Distribution
-    needs: stage2_creation
+    needs:
+      - stage2_creation
+      - stage1_research
     runs-on: ubuntu-latest
+    outputs:
+      product: ${{ steps.forward_configuration.outputs.product }}
+      persona: ${{ steps.forward_configuration.outputs.persona }}
+      lookback_days: ${{ steps.forward_configuration.outputs.lookback_days }}
+    env:
+      PRODUCT: ${{ needs.stage2_creation.outputs.product }}
+      PERSONA_NAME: ${{ needs.stage2_creation.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.stage2_creation.outputs.lookback_days }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -131,6 +198,15 @@ jobs:
             --persona-name "${PERSONA_NAME}" \
             --lookback-days "${LOOKBACK_DAYS}"
 
+      - name: Forward configuration for downstream stages
+        id: forward_configuration
+        run: |
+          {
+            printf 'product=%s\n' "${PRODUCT}"
+            printf 'persona=%s\n' "${PERSONA_NAME}"
+            printf 'lookback_days=%s\n' "${LOOKBACK_DAYS}"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Upload Stage 3 artifact bundle
         uses: actions/upload-artifact@v4
         with:
@@ -139,8 +215,18 @@ jobs:
 
   stage4_analytics:
     name: Stage 4 — Analytics & Refinement
-    needs: stage3_distribution
+    needs:
+      - stage3_distribution
+      - stage1_research
     runs-on: ubuntu-latest
+    outputs:
+      product: ${{ steps.forward_configuration.outputs.product }}
+      persona: ${{ steps.forward_configuration.outputs.persona }}
+      lookback_days: ${{ steps.forward_configuration.outputs.lookback_days }}
+    env:
+      PRODUCT: ${{ needs.stage3_distribution.outputs.product }}
+      PERSONA_NAME: ${{ needs.stage3_distribution.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.stage3_distribution.outputs.lookback_days }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -169,6 +255,15 @@ jobs:
             --persona-name "${PERSONA_NAME}" \
             --lookback-days "${LOOKBACK_DAYS}"
 
+      - name: Forward configuration for downstream stages
+        id: forward_configuration
+        run: |
+          {
+            printf 'product=%s\n' "${PRODUCT}"
+            printf 'persona=%s\n' "${PERSONA_NAME}"
+            printf 'lookback_days=%s\n' "${LOOKBACK_DAYS}"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Upload Stage 4 artifact bundle
         uses: actions/upload-artifact@v4
         with:
@@ -177,8 +272,14 @@ jobs:
 
   stage5_growth:
     name: Stage 5 — Continuous Growth Loop
-    needs: stage4_analytics
+    needs:
+      - stage4_analytics
+      - stage1_research
     runs-on: ubuntu-latest
+    env:
+      PRODUCT: ${{ needs.stage4_analytics.outputs.product }}
+      PERSONA_NAME: ${{ needs.stage4_analytics.outputs.persona }}
+      LOOKBACK_DAYS: ${{ needs.stage4_analytics.outputs.lookback_days }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
