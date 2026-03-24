@@ -1,9 +1,9 @@
 <!-- BLOG-POST-LIST:START -->
+- [Why Men Pull Away: 9 Toxic Signs He’s Shutting Down](https://understandman727.blogspot.com/2026/03/why-men-pull-away-9-toxic-signs-hes.html)
 - [If he’s pulling away, don’t panic—follow this 5 step repair plan.](https://understandman727.blogspot.com/2026/03/if-hes-pulling-away-dont-panicfollow.html)
 - [7 Anxious Attachment Patterns Driving Men Away &lpar;Fix Them&rpar;](https://understandman727.blogspot.com/2026/03/7-anxious-attachment-patterns-driving.html)
 - [7 Toxic Patterns Women Ignore in Anxious Attachment](https://understandman727.blogspot.com/2026/03/7-toxic-patterns-women-ignore-in.html)
 - [9 Toxic Anxious Attachment Behaviors](https://understandman727.blogspot.com/2026/03/blog-post.html)
-- [7 Ways to Stop Anxious Attachment From Ruining Relationships](https://understandman727.blogspot.com/2026/03/7-ways-to-stop-anxious-attachment-from.html)
 <!-- BLOG-POST-LIST:END -->
 
 ## Automation
