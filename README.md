@@ -1,9 +1,9 @@
 <!-- BLOG-POST-LIST:START -->
+- [Why He Pulls Away After Conflict and 7 Smart Ways to Reconnect with your Husband](https://understandman727.blogspot.com/2026/04/why-he-pulls-away-after-conflict-and-7.html)
 - [7 Painful Truths About a Sexless Marriage](https://understandman727.blogspot.com/2026/04/7-painful-truths-about-sexless-marriage.html)
 - [9 Painful Signs Your Husband Is Emotionally Uninvested](https://understandman727.blogspot.com/2026/04/9-painful-signs-your-husband-is.html)
 - [7 Shocking Micro Cheating Signs He Thinks You’ll Miss](https://understandman727.blogspot.com/2026/03/7-shocking-micro-cheating-signs-he.html)
 - [Why Men Pull Away: 9 Toxic Signs He’s Shutting Down](https://understandman727.blogspot.com/2026/03/why-men-pull-away-9-toxic-signs-hes.html)
-- [If he’s pulling away, don’t panic—follow this 5 step repair plan.](https://understandman727.blogspot.com/2026/03/if-hes-pulling-away-dont-panicfollow.html)
 <!-- BLOG-POST-LIST:END -->
 
 ## Automation
